@@ -45,20 +45,17 @@ class TennisGame3:
             return "Win for " + winning_player.name
         else:
             named_score = BEFORE_DEUCE_SCORE_NAMES[self.player1.score]
-            return (
-                named_score + "-All"
-                if (self.player1.score == self.player2.score)
-                else named_score + "-" + BEFORE_DEUCE_SCORE_NAMES[self.player2.score]
-            )
+            if self.player1.score == self.player2.score:
+                return named_score + "-All"
+            else:
+                return named_score + "-" + BEFORE_DEUCE_SCORE_NAMES[self.player2.score]
 
     def _after_deuce_score(self) -> str:
         """Get the score, when deuce has not been scored."""
         winning_player = self.winning_player()
         if self.player1.score == self.player2.score:
             return "Deuce"  # 40-All
+        elif abs(self.player1.score - self.player2.score) == 1:
+            return "Advantage " + winning_player.name
         else:
-            return (
-                "Advantage " + winning_player.name
-                if abs(self.player1.score - self.player2.score) == 1
-                else "Win for " + winning_player.name
-            )
+            return "Win for " + winning_player.name
