@@ -2,6 +2,13 @@
 
 
 class TennisGame2:
+    POINTS_TO_SCORE = {
+        0: "Love",
+        1: "Fifteen",
+        2: "Thirty",
+        3: "Forty",
+    }
+
     def __init__(self, player1Name, player2Name):
         self.player1Name = player1Name
         self.player2Name = player2Name
@@ -16,88 +23,31 @@ class TennisGame2:
 
     def score(self):
         result = ""
-        if self.p1points == self.p2points and self.p1points < 3:
-            if self.p1points == 0:
-                result = "Love"
-            if self.p1points == 1:
-                result = "Fifteen"
-            if self.p1points == 2:
-                result = "Thirty"
-            result += "-All"
-        if self.p1points == self.p2points and self.p1points > 2:
-            result = "Deuce"
-
-        P1res = ""
-        P2res = ""
-        if self.p1points > 0 and self.p2points == 0:
-            if self.p1points == 1:
-                P1res = "Fifteen"
-            if self.p1points == 2:
-                P1res = "Thirty"
-            if self.p1points == 3:
-                P1res = "Forty"
-
-            P2res = "Love"
+        if self.p1points == self.p2points:
+            # tied game
+            if self.p1points < 3:
+                result = TennisGame2.POINTS_TO_SCORE[self.p1points] + "-All"
+            else:
+                result = "Deuce"
+        elif self.p1points < 4 and self.p2points < 4:
+            # early game
+            P1res = TennisGame2.POINTS_TO_SCORE[self.p1points]
+            P2res = TennisGame2.POINTS_TO_SCORE[self.p2points]
             result = P1res + "-" + P2res
-        if self.p2points > 0 and self.p1points == 0:
-            if self.p2points == 1:
-                P2res = "Fifteen"
-            if self.p2points == 2:
-                P2res = "Thirty"
-            if self.p2points == 3:
-                P2res = "Forty"
-
-            P1res = "Love"
-            result = P1res + "-" + P2res
-
-        if self.p1points > self.p2points and self.p1points < 4:
-            if self.p1points == 2:
-                P1res = "Thirty"
-            if self.p1points == 3:
-                P1res = "Forty"
-            if self.p2points == 1:
-                P2res = "Fifteen"
-            if self.p2points == 2:
-                P2res = "Thirty"
-            result = P1res + "-" + P2res
-        if self.p2points > self.p1points and self.p2points < 4:
-            if self.p2points == 2:
-                P2res = "Thirty"
-            if self.p2points == 3:
-                P2res = "Forty"
-            if self.p1points == 1:
-                P1res = "Fifteen"
-            if self.p1points == 2:
-                P1res = "Thirty"
-            result = P1res + "-" + P2res
-
-        if self.p1points > self.p2points and self.p2points >= 3:
-            result = "Advantage player1"
-
-        if self.p2points > self.p1points and self.p1points >= 3:
-            result = "Advantage player2"
-
-        if (
-            self.p1points >= 4
-            and self.p2points >= 0
-            and (self.p1points - self.p2points) >= 2
-        ):
-            result = "Win for player1"
-        if (
-            self.p2points >= 4
-            and self.p1points >= 0
-            and (self.p2points - self.p1points) >= 2
-        ):
-            result = "Win for player2"
+        else:
+            # end game
+            leading_player = "player1" if self.p1points > self.p2points else "player2"
+            if abs(self.p1points - self.p2points) == 1:
+                result = f"Advantage {leading_player}"
+            else:
+                result = f"Win for {leading_player}"
         return result
 
-    def SetP1Score(self, number):
-        for i in range(number):
-            self.P1Score()
+    def SetP1Points(self, number):
+        self.p1points = number
 
-    def SetP2Score(self, number):
-        for i in range(number):
-            self.P2Score()
+    def SetP2Points(self, number):
+        self.p2points = number
 
     def P1Score(self):
         self.p1points += 1
