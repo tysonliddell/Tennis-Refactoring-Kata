@@ -2,32 +2,37 @@
 
 
 class TennisGame5:
+    SCORES = ["Love", "Fifteen", "Thirty", "Forty"]
+    WIN_MESSAGE = "Win for {player}"
+    ADVANTAGE_MESSAGE = "Advantage {player}"
+    DEUCE_MESSAGE = "Deuce"
+    TIE_MESSAGE = "{score}-All"
     SCORE_LOOKUP = {
-        (0, 0): "Love-All",
-        (0, 1): "Love-Fifteen",
-        (0, 2): "Love-Thirty",
-        (0, 3): "Love-Forty",
-        (0, 4): "Win for player2",
-        (1, 0): "Fifteen-Love",
-        (1, 1): "Fifteen-All",
-        (1, 2): "Fifteen-Thirty",
-        (1, 3): "Fifteen-Forty",
-        (1, 4): "Win for player2",
-        (2, 0): "Thirty-Love",
-        (2, 1): "Thirty-Fifteen",
-        (2, 2): "Thirty-All",
-        (2, 3): "Thirty-Forty",
-        (2, 4): "Win for player2",
-        (3, 0): "Forty-Love",
-        (3, 1): "Forty-Fifteen",
-        (3, 2): "Forty-Thirty",
-        (3, 3): "Deuce",
-        (3, 4): "Advantage player2",
-        (4, 0): "Win for player1",
-        (4, 1): "Win for player1",
-        (4, 2): "Win for player1",
-        (4, 3): "Advantage player1",
-        (4, 4): "Deuce",
+        (0, 0): TIE_MESSAGE.format(score=SCORES[0]),
+        (0, 1): f"{SCORES[0]}-{SCORES[1]}",
+        (0, 2): f"{SCORES[0]}-{SCORES[2]}",
+        (0, 3): f"{SCORES[0]}-{SCORES[3]}",
+        (0, 4): WIN_MESSAGE.format(player="player2"),
+        (1, 0): f"{SCORES[1]}-{SCORES[0]}",
+        (1, 1): TIE_MESSAGE.format(score=SCORES[1]),
+        (1, 2): f"{SCORES[1]}-{SCORES[2]}",
+        (1, 3): f"{SCORES[1]}-{SCORES[3]}",
+        (1, 4): WIN_MESSAGE.format(player="player2"),
+        (2, 0): f"{SCORES[2]}-{SCORES[0]}",
+        (2, 1): f"{SCORES[2]}-{SCORES[1]}",
+        (2, 2): TIE_MESSAGE.format(score=SCORES[2]),
+        (2, 3): f"{SCORES[2]}-{SCORES[3]}",
+        (2, 4): WIN_MESSAGE.format(player="player2"),
+        (3, 0): f"{SCORES[3]}-{SCORES[0]}",
+        (3, 1): f"{SCORES[3]}-{SCORES[1]}",
+        (3, 2): f"{SCORES[3]}-{SCORES[2]}",
+        (3, 3): DEUCE_MESSAGE,
+        (3, 4): ADVANTAGE_MESSAGE.format(player="player2"),
+        (4, 0): WIN_MESSAGE.format(player="player1"),
+        (4, 1): WIN_MESSAGE.format(player="player1"),
+        (4, 2): WIN_MESSAGE.format(player="player1"),
+        (4, 3): ADVANTAGE_MESSAGE.format(player="player1"),
+        (4, 4): DEUCE_MESSAGE,
     }
 
     def __init__(self, player1Name, player2Name):
